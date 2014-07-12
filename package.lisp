@@ -7,7 +7,7 @@
 (in-package :weblocks-cms-logging)
 
 (weblocks-cms:def-additional-schema 
-  :template
+  :log-record
   `((:TITLE "Log Record" :NAME :LOG-RECORD :FIELDS
      ((:TITLE "Title" :NAME :TITLE :TYPE :STRING :OPTIONS NIL)
       (:TITLE "Session Id" :NAME :SESSION-ID :TYPE :STRING :OPTIONS NIL)
