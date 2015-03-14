@@ -6,7 +6,7 @@
   :description "Describe weblocks-cms-logging here"
   :author "Olexiy Zamkoviy"
   :license "Specify license here"
-  :depends-on (#:weblocks-cms #:yaclml)
+  :depends-on (#:weblocks-cms #:yaclml #:weblocks-filtering-widget #:weblocks-utils #:group-by)
   :components ((:file "package")
                (:file "weblocks-cms-logging")))
 
