@@ -20,6 +20,7 @@
                      :data (list 
                              :error-class-name (class-name (class-of condition))
                              :error-string (format nil "~A" condition)
+                             :timings-data (complete-running-timings)
                              :trace 
                                  #-sbcl(trivial-backtrace:print-backtrace condition :output nil)
                                  #+sbcl(loop for i in (sb-debug:backtrace-as-list) 
@@ -47,6 +48,11 @@
                              (<:dd (<:b (<:as-is (getf (weblocks-cms::log-record-data item) :error-class-name)))
                                    (<:as-is "&nbsp;")
                                    (<:as-is (getf (weblocks-cms::log-record-data item) :error-string)))
+                             (firephp:fb (weblocks-cms::log-record-data item))
+
+                             (when (getf (weblocks-cms::log-record-data item) :timings-data)
+                               (<:dt "Timing data")
+                               (<:dd (display-timings-as-html (getf (weblocks-cms::log-record-data item) :timings-data))))
                              (<:dt "Backtrace")
                              (<:dd 
                                (<:table :class "table table-striped" :style "font-size:smaller"
