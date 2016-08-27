@@ -32,7 +32,7 @@
                       (string= (getf i :name) (second removed-timing-data)))
                   (progn 
                     (setf (getf i :spent/real) (/ (- (get-internal-real-time) (third removed-timing-data)) internal-time-units-per-second))
-                    (setf (getf i :spent/cpu) (/ (- (get-internal-real-time) (fourth removed-timing-data)) internal-time-units-per-second))
+                    (setf (getf i :spent/cpu) (/ (- (get-internal-run-time) (fourth removed-timing-data)) internal-time-units-per-second))
                     i)
                   i))))
 
