@@ -48,8 +48,6 @@
                              (<:dd (<:b (<:as-is (getf (weblocks-cms::log-record-data item) :error-class-name)))
                                    (<:as-is "&nbsp;")
                                    (<:as-is (getf (weblocks-cms::log-record-data item) :error-string)))
-                             (firephp:fb (weblocks-cms::log-record-data item))
-
                              (when (getf (weblocks-cms::log-record-data item) :timings-data)
                                (<:dt "Timing data")
                                (<:dd (display-timings-as-html (getf (weblocks-cms::log-record-data item) :timings-data))))

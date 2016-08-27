@@ -8,6 +8,6 @@
   :license "Specify license here"
   :depends-on (#:weblocks-cms #:yaclml #:weblocks-filtering-widget #:weblocks-utils #:group-by)
   :components ((:file "package")
-               (:file "weblocks-cms-logging" :depends-on "timing-debug")
-               (:file "timing-debug" :depends-on ("package"))))
+               (:file "timing-debug")
+               (:file "weblocks-cms-logging")))
 
