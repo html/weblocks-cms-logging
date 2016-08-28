@@ -23,21 +23,25 @@
   (declare (special *timings*))
   ;(firephp:fb "End" level name)
 
-  (let ((removed-timing-data (remove-running-timing level name)))
-    (setf *timings* 
-          (loop for i in *timings* 
-                collect
-                (if (and 
-                      (= (getf i :level) (first removed-timing-data))
-                      (string= (getf i :name) (second removed-timing-data)))
-                  (progn 
-                    (setf (getf i :spent/real) (/ (- (get-internal-real-time) (third removed-timing-data)) internal-time-units-per-second))
-                    (setf (getf i :spent/cpu) (/ (- (get-internal-run-time) (fourth removed-timing-data)) internal-time-units-per-second))
-                    i)
-                  i))))
+  (ignore-and-log-errors 
+    (lambda (error)
+      (format t "Hidden error occured ~A~%" error))
+    (let ((removed-timing-data (remove-running-timing level name)))
+      (setf *timings* 
+            (loop for i in *timings* 
+                  collect
+                  (if (and 
+                        (first removed-timing-data)
+                        (= (getf i :level) (first removed-timing-data))
+                        (string= (getf i :name) (second removed-timing-data)))
+                    (progn 
+                      (setf (getf i :spent/real) (/ (- (get-internal-real-time) (third removed-timing-data)) internal-time-units-per-second))
+                      (setf (getf i :spent/cpu) (/ (- (get-internal-run-time) (fourth removed-timing-data)) internal-time-units-per-second))
+                      i)
+                    i))))
 
-  (when (= level 1)
-    (display-timings (reverse *timings*))))
+    (when (= level 1)
+      (display-timings (reverse *timings*)))))
 
 (defun display-timings (timings)
   (format t "~%~%~%")

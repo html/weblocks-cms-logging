@@ -2,11 +2,6 @@
 
 (in-package #:weblocks-cms-logging)
 
-(defmacro ignore-and-log-errors (log-function &body body)
-  `(handler-case 
-     (progn ,@body)
-     (error (e) (funcall ,log-function e))))
-
 ;;; "weblocks-cms-logging" goes here. Hacks and glory await!
 (defun log-error (condition &key on-error)
   "on-error - function which should be called when error occures during log attempt"
@@ -20,7 +15,7 @@
                      :data (list 
                              :error-class-name (class-name (class-of condition))
                              :error-string (format nil "~A" condition)
-                             :timings-data (complete-running-timings)
+                             :timings-data (ignore-and-log-errors on-error (complete-running-timings))
                              :trace 
                                  #-sbcl(trivial-backtrace:print-backtrace condition :output nil)
                                  #+sbcl(loop for i in (sb-debug:backtrace-as-list) 

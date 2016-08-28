@@ -14,3 +14,7 @@
       (:TITLE "Data" :NAME :DATA :TYPE :CUSTOM :OPTIONS "weblocks-cms-logging::log-record-data-fields")
       (:TITLE "Time Created" :NAME :TIME-CREATED :TYPE :DATETIME :OPTIONS NIL)))))
  
+(defmacro ignore-and-log-errors (log-function &body body)
+  `(handler-case 
+     (progn ,@body)
+     (error (e) (funcall ,log-function e))))
